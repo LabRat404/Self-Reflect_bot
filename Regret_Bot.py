@@ -11,7 +11,7 @@ bot = telebot.TeleBot(BOT_TOKEN)
 
 @bot.message_handler(commands=['regret'])
 def send_regret(message):
-    bot.send_message(message.chat.id, "miss her but shes not coming back ( ･᷄ ︵･᷅ )")
+    bot.send_message(message.chat.id, "miss her but shes not coming back ㅠ︵ㅠ QAQ")
 
 
 @bot.message_handler(commands=['help'])
