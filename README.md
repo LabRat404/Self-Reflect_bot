@@ -18,6 +18,6 @@ Commands:
 /youtube <String> -> Search for top 5 videos from youtube with the String
 <--- To be Implement --->
 /GPT <String> -> call ChatGPT API and return results directly.
-/GPT_Advanced_tube -> Integrate youtube + chatGPT to recomand videos from youtube
-/GPT_Advanced_book -> Integrate youtube + chatGPT to recomand books from GoogleBookAPI
+/GPT_Advanced_tube <String> -> Integrate youtube + chatGPT to recomand videos from youtube
+/GPT_Advanced_book <String> -> Integrate youtube + chatGPT to recomand books from GoogleBookAPI
 
