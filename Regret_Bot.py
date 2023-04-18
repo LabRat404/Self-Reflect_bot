@@ -3,6 +3,7 @@ import telebot
 import requests
 import re
 import certifi
+import openai
 from pymongo import MongoClient
 from apiclient.discovery import build
 from concurrent.futures import ThreadPoolExecutor
@@ -10,6 +11,7 @@ from concurrent.futures import ThreadPoolExecutor
 BOT_TOKEN = os.environ.get('bot_token')
 CHATID = os.environ.get('chatid')
 UAPI = os.environ.get('youtubeAPI')
+OpenAPI = os.environ.get('openAI')
 bot = telebot.TeleBot(BOT_TOKEN)
 
 def take_record(message):
@@ -52,6 +54,19 @@ def send_visit(message):
         take_record(message)
         message = bot_record.result()
         executor.submit(take_record, message)
+
+@bot.message_handler(commands=['GPT'])
+def send_GPT(message):
+    search_pattern = r'/GPT\s+(.*)'
+    match = re.match(search_pattern, message.text).group(1)
+    prompt = f"{match}. Reply 'x' if none found and with least token use"
+    response = openai.Completion.create(engine="davinci", prompt=prompt, max_tokens=120, temperature=0)
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        bot_record = executor.submit(send_message, message.chat.id, response['choice'][0]['text'])
+        take_record(message)
+        message = bot_record.result()
+        executor.submit(take_record, message)
+
 
 @bot.message_handler(commands=['youtube'])
 def send_youtube(message):
